@@ -1,5 +1,8 @@
 docs/site/
 
+# All Models dont add to git
+*.pt
+
 # test cache
 manual_test/
 

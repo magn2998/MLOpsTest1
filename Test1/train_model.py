@@ -17,10 +17,10 @@ optimizer = optim.SGD(model.parameters(), lr=0.03)
 
 
 # Create Data Loaders and Load Data Sets
-train_images = torch.load("data/processed/train_imgs.pt")
-train_labels = torch.load("data/processed/train_labels.pt")
-test_images = torch.load("data/processed/test_imgs.pt")
-test_labels = torch.load("data/processed/test_labels.pt")
+train_images = torch.load("data/processed/train_imgs_v2.pt")
+train_labels = torch.load("data/processed/train_labels_v2.pt")
+test_images = torch.load("data/processed/test_imgs_v2.pt")
+test_labels = torch.load("data/processed/test_labels_v2.pt")
 
 train_dataset = TensorDataset(train_images, train_labels)  # create your datset
 train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True)  # create your dataloader
@@ -97,4 +97,4 @@ for epoch in range(EPOCHS):
 
             # Save the figure and model
             plt.savefig("reports/figures/Result2.png")
-            torch.save(model.state_dict(), "models/TrainedModel.pt")
+            torch.save(model.state_dict(), "models/TrainedModel2.pt")
