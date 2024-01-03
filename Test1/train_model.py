@@ -3,17 +3,17 @@ import numpy as np
 from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 import matplotlib.pyplot as plt
-from Test1.models.model import MyCnnNetwork
+from Test1.models.model import MyCnnNetwork, MyNeuralNet
 
 import sys
 
 EPOCHS = int(sys.argv[1])
 
-model = MyCnnNetwork()
+model = MyNeuralNet()
 print(model)
 
 criterion = nn.NLLLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.003)
+optimizer = optim.SGD(model.parameters(), lr=0.03)
 
 
 # Create Data Loaders and Load Data Sets
@@ -43,7 +43,7 @@ for epoch in range(EPOCHS):
         optimizer.zero_grad()
 
         # TODO: Training pass
-        output, _ = model.forward(images)
+        output = model.forward(images)
         # print(output)
         # print(output.shape)
         loss = criterion(output, labels)
@@ -59,7 +59,7 @@ for epoch in range(EPOCHS):
         # print(test_images.shape)
         # print(test_labels.shape)
 
-        pred, _ = model.forward(test_images)
+        pred = model.forward(test_images)
 
         # print(pred)
         ps = torch.exp(pred)
