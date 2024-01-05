@@ -54,7 +54,13 @@ class MyCnnNetwork(torch.nn.Module):
         )
 
         self.fc = nn.Sequential(
-            nn.Dropout(0.5), nn.Linear(7 * 7 * 16, 256), nn.ReLU(), nn.Linear(256, 10), nn.LogSoftmax(dim=1)
+            nn.Dropout(0.5), 
+            nn.Linear(7 * 7 * 16, 512), 
+            nn.ReLU(), 
+            nn.Linear(512, 128),
+            nn.ReLU(),
+            nn.Linear(128,10), 
+            nn.LogSoftmax(dim=1)
         )
 
     def forward(self, x):

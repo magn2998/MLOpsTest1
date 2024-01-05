@@ -6,7 +6,7 @@
 
 PROJECT_NAME = Test1
 PYTHON_VERSION = 3.9
-PYTHON_INTERPRETER = python
+PYTHON_INTERPRETER = python3
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -37,19 +37,19 @@ clean:
 #################################################################################
 
 ## Process raw data into processed data
-data: requirements
-	$(PYTHON_INTERPRETER) $(PROJECT_NAME)/data/make_dataset.py
+data: 
+	$(PYTHON_INTERPRETER) -u $(PROJECT_NAME)/data/make_dataset.py
 
 EPOCHS?=5
-train: requirements
-	$(PYTHON_INTERPRETER) -m $(PROJECT_NAME).train_model $(EPOCHS) 
+train: 
+	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).train_model $(EPOCHS) 
 
 MODEL?=TrainedModel.pt
-predict: requirements
-	$(PYTHON_INTERPRETER) -m $(PROJECT_NAME).predict_model $(MODEL) 
+predict: 
+	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).predict_model $(MODEL) 
 
-visualize: requirements
-	$(PYTHON_INTERPRETER) -m $(PROJECT_NAME).visualizations.visualize $(MODEL) 
+visualize: 
+	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).visualizations.visualize $(MODEL) 
 
 
 #################################################################################

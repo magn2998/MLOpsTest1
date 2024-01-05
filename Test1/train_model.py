@@ -4,13 +4,17 @@ from torch import nn, optim
 from torch.utils.data import TensorDataset, DataLoader
 import matplotlib.pyplot as plt
 from Test1.models.model import MyCnnNetwork, MyNeuralNet
-
+import wandb
 import sys
+
+wandb.init()
 
 EPOCHS = int(sys.argv[1])
 
-model = MyNeuralNet()
+model = MyCnnNetwork()
 print(model)
+
+wandb.watch(model, log_freq=100)
 
 criterion = nn.NLLLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.03)
@@ -36,6 +40,7 @@ train_loss = []
 test_acc = []
 for epoch in range(EPOCHS):
     print("Running Epoch no. " + str(epoch))
+    counter = 0
     for images, labels in train_dataloader:
         # Flatten Corrupted MNIST images
         # print(images.shape)
@@ -43,7 +48,7 @@ for epoch in range(EPOCHS):
         optimizer.zero_grad()
 
         # TODO: Training pass
-        output = model.forward(images)
+        output, _ = model.forward(images)
         # print(output)
         # print(output.shape)
         loss = criterion(output, labels)
@@ -53,13 +58,16 @@ for epoch in range(EPOCHS):
 
         train_loss.append(loss)
 
+        if counter % 10 == 0:
+            wandb.log({"loss": loss})
+        counter = counter + 1
     else:
         model.eval()
         # Use Data
         # print(test_images.shape)
         # print(test_labels.shape)
 
-        pred = model.forward(test_images)
+        pred, _ = model.forward(test_images)
 
         # print(pred)
         ps = torch.exp(pred)
@@ -69,6 +77,7 @@ for epoch in range(EPOCHS):
         correct_guesses = top_class == test_labels.view(*top_class.shape)
         accuracy = torch.mean(correct_guesses.type(torch.FloatTensor))
         print(f"Accuracy for epoch {epoch}: {accuracy.item()*100}%")
+        wandb.log({"Accuracy": accuracy.item()*100})
 
         test_acc.append(accuracy.item() * 100)
 
