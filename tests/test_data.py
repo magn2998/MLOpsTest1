@@ -30,6 +30,8 @@ def test_data():
     assert len(train_images) == len(train_labels)
     assert len(val_images) == len(val_labels)
 
+    assert 10 == 10, "Random test"
+
     for img in train_images:
         assert img.shape[0] == 28*28
         break
