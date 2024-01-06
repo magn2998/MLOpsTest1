@@ -1,17 +1,22 @@
 import os
 import torch
 from tests import _PATH_DATA
+import Test1.data.make_dataset as DataMaker
 import logging
 
 LOGGER = logging.getLogger(__name__)
 
 N_train = 50000
 N_test = 5000
+# Create the dataset
+DataMaker.make_dataset()
 
 train_image_path = os.path.join(_PATH_DATA, "processed", "train_imgs_v2.pt")
 train_label_path = os.path.join(_PATH_DATA, "processed", "train_labels_v2.pt")
 test_image_path  = os.path.join(_PATH_DATA, "processed", "test_imgs_v2.pt")
 test_labels_path = os.path.join(_PATH_DATA, "processed", "test_labels_v2.pt")
+
+
 
 def test_data():
     train_images = torch.load(train_image_path)

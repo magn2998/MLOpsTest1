@@ -1,6 +1,6 @@
 import torch
 
-if __name__ == "__main__":
+def make_dataset():
     # exchange with the corrupted mnist dataset
     path_train_str = 'data/raw/corruptmnist_v2/'
     path_test_str  = 'data/raw/corruptmnist/'
@@ -49,3 +49,6 @@ if __name__ == "__main__":
     torch.save(train_labels, "data/processed/train_labels_v2.pt")
     torch.save(test_images, "data/processed/test_imgs_v2.pt")
     torch.save(test_labels, "data/processed/test_labels_v2.pt")
+
+if __name__ == "__main__":
+    make_dataset()
