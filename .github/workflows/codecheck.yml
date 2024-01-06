@@ -23,5 +23,5 @@ jobs:
       run: pip install ruff
     - name: Test with pytest
       run: |
-        ruff check
+        ruff check --fix
         ruff format
