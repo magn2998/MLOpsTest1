@@ -10,3 +10,4 @@ repos:
     -   id: check-added-large-files
     -   id: no-commit-to-branch
     -   id: pretty-format-json
+        args: [--autofix]
