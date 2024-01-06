@@ -5,3 +5,4 @@ matplotlib
 scikit-learn
 hydra-core
 pytorch-lightning
+pytest
