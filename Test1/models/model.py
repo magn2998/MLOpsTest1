@@ -1,5 +1,6 @@
 import torch
-from torch import nn
+from torch import nn, optim
+from pytorch_lightning import LightningModule
 
 
 class MyNeuralNet(torch.nn.Module):
@@ -35,7 +36,7 @@ class MyNeuralNet(torch.nn.Module):
         return self.softmax(self.output(x))
 
 
-class MyCnnNetwork(torch.nn.Module):
+class MyCnnNetwork(LightningModule):
     def __init__(self, num_classes=10):
         super(MyCnnNetwork, self).__init__()
 
@@ -63,6 +64,8 @@ class MyCnnNetwork(torch.nn.Module):
             nn.LogSoftmax(dim=1)
         )
 
+        self.criterium = nn.CrossEntropyLoss()
+
     def forward(self, x):
         out = x.view(x.size(0), 28, 28)
         out = out.unsqueeze(1)
@@ -71,3 +74,26 @@ class MyCnnNetwork(torch.nn.Module):
         out = cnn_out.reshape(cnn_out.size(0), -1)
         out = self.fc(out)
         return out, cnn_out
+    
+    def training_step(self, batch, batch_idx):
+        data, target = batch
+        preds,_ = self.forward(data)
+        loss = self.criterium(preds, target)
+        self.log('train_loss', loss)
+        return loss
+    
+    def validation_step(self, batch, batch_idx):
+        data, target = batch
+        pred, _ = self.forward(data)
+
+        # print(pred)
+        ps = torch.exp(pred)
+
+        _, top_class = ps.topk(1, dim=1)
+
+        correct_guesses = top_class == target.view(*top_class.shape)
+        accuracy = torch.mean(correct_guesses.type(torch.FloatTensor))
+        self.log('val_accuracy', accuracy)
+
+    def configure_optimizers (self):
+        return optim.SGD(self.parameters(), lr=0.03)
