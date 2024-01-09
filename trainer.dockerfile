@@ -28,6 +28,3 @@ RUN pip install -r requirements.txt
 
 # Entry point
 ENTRYPOINT ["make", "train"]
-
-
-

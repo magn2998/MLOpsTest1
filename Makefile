@@ -37,19 +37,19 @@ clean:
 #################################################################################
 
 ## Process raw data into processed data
-data: 
+data:
 	$(PYTHON_INTERPRETER) -u $(PROJECT_NAME)/data/make_dataset.py
 
 EPOCHS?=5
-train: 
-	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).train_model $(EPOCHS) 
+train:
+	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).train_model $(EPOCHS)
 
 MODEL?=TrainedModel.pt
-predict: 
-	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).predict_model $(MODEL) 
+predict:
+	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).predict_model $(MODEL)
 
-visualize: 
-	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).visualizations.visualize $(MODEL) 
+visualize:
+	$(PYTHON_INTERPRETER) -u -m $(PROJECT_NAME).visualizations.visualize $(MODEL)
 
 
 #################################################################################
